@@ -66,3 +66,10 @@ GROUP BY s.store_id
 ORDER BY Total_Revenue DESC;
 
 -- What is your recommendation for where to focus sales attention in the next quarter? --
+-- The state of South Carolina is thriving in this sales model, but could still use some focus on the online-sales sector.
+-- The growth has been consistent throughout, as show in 'Result #3'. 
+-- With each passing year, South Carolina continues to do better and better on the in-store sales front, but compared to other states like Florida and Texas, their online-sales in comparison is it's weakest area.
+-- This is due to the size of Florida and Texas compared to South Carolina, given that South Carolina only has 2 stores.
+-- The creation of a new store would be highly suggested in South Carolina, Columbia being the best location given it's ever-rising population.
+
+
