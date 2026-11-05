@@ -1,0 +1,68 @@
+-- What is total revenue overall for sales in the assigned territory (South Carolina), plus the start date and end date that tell you what period the data covers? -- 
+SELECT SUM(s.sale_amount) AS Total_Revenue, l.state 
+FROM store_sales AS S INNER JOIN store_locations AS L 
+    ON s.store_id = l.storeid
+WHERE l.state = 'South Carolina'
+GROUP BY l.state;
+
+SELECT  
+    MIN(s.Transaction_Date) AS Start,
+    MAX(s.Transaction_Date) AS End
+FROM store_sales AS S INNER JOIN store_locations AS L 
+    ON s.store_id = l.storeid 
+WHERE l.state = 'South Carolina';
+
+-- What is the revenue breakdown by year and month for the sales territory? -- 
+SELECT SUM(s.sale_amount) AS Total_Revenue, 
+    YEAR(s.Transaction_Date) AS Year, 
+    MONTH(s.Transaction_Date) AS Month
+FROM store_sales AS S INNER JOIN store_locations AS L 
+    ON s.store_id = l.storeid
+WHERE l.state = 'South Carolina'
+GROUP BY Year, Month
+ORDER BY Year ASC, Month ASC;
+
+-- Provide a comparison of total revenue for the specific sales territory (South Carolina) and the region (South) it belongs to. --
+SELECT SUM(s.sale_amount) AS Total_Revenue, m.region 
+FROM store_sales AS S 
+    INNER JOIN store_locations AS L ON s.store_id = l.storeid
+    INNER JOIN management AS M ON l.state = m.state
+WHERE m.region = 'South'
+GROUP BY m.region;
+
+SELECT SUM(s.sale_amount) AS Total_Revenue, l.state 
+FROM store_sales AS S INNER JOIN store_locations AS L 
+    ON s.store_id = l.storeid
+WHERE l.state = 'South Carolina'
+GROUP BY l.state;
+
+-- What is the number of transactions per month and average transaction amount by product category for the sales territory? --
+SELECT COUNT(s.sale_amount) AS Transactions, p.categoryid,
+    YEAR(s.Transaction_Date) AS Year, 
+    MONTH(s.Transaction_Date) AS Month
+FROM store_sales AS S 
+    INNER JOIN store_locations AS L ON s.store_id = l.storeid
+    INNER JOIN products AS P ON p.prodnum = s.prod_num
+WHERE l.state = 'South Carolina'
+GROUP BY Year, Month, p.categoryid
+ORDER BY p.categoryid, Year ASC, Month ASC;
+
+SELECT ROUND(AVG(s.sale_amount),2) AS Average_Amount, p.categoryid,
+    YEAR(s.Transaction_Date) AS Year, 
+    MONTH(s.Transaction_Date) AS Month
+FROM store_sales AS S 
+    INNER JOIN store_locations AS L ON s.store_id = l.storeid
+    INNER JOIN products AS P ON p.prodnum = s.prod_num
+WHERE l.state = 'South Carolina'
+GROUP BY Year, Month, p.categoryid
+ORDER BY p.categoryid, Year ASC, Month ASC;
+
+-- Can you provide a ranking of in-store sales performance by each store in the sales territory, or a ranking of online sales performance by state within an online sales territory? -- 
+SELECT SUM(s.sale_amount) AS Total_Revenue, s.store_id
+FROM store_sales AS S 
+    INNER JOIN store_locations AS L ON s.store_id = l.storeid
+WHERE l.state = 'South Carolina'
+GROUP BY s.store_id 
+ORDER BY Total_Revenue DESC;
+
+-- What is your recommendation for where to focus sales attention in the next quarter? --
